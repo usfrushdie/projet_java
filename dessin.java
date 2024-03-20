@@ -1,9 +1,7 @@
-package projetJava;
-
 import java.awt.*;
 import java.awt.event.*;
 
-public class FormesApp {
+public class dessin {
     public static void main(String[] args) {
         FormesFrame frame = new FormesFrame();
         frame.setVisible(true);
@@ -57,19 +55,15 @@ class FormesFrame extends Frame {
                 int width = Math.abs(x2 - x1);
                 int height = Math.abs(y2 - y1);
                 int upperLeftX = Math.min(x1, x2);
-                int upperLeftY = Math.min(y1, y2);
-                g2d.drawRect(upperLeftX, upperLeftY, width, height);
+                int upperLeftYRect = Math.min(y1, y2); // Renommage de la variable
+                g2d.drawRect(upperLeftX, upperLeftYRect, width, height);
                 break;
             case 2: // Circle
                 int diameter = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1));
-                upperLeftX = x1 < x2 ? x1 : x1 - diameter;
-                upperLeftY = y1 < y2 ? y1 : y1 - diameter;
-                g2d.drawOval(upperLeftX, upperLeftY, diameter, diameter);
+                int upperLeftXCircle = x1 < x2 ? x1 : x1 - diameter; // Renommage de la variable
+                int upperLeftYCircle = y1 < y2 ? y1 : y1 - diameter; // Renommage de la variable
+                g2d.drawOval(upperLeftXCircle, upperLeftYCircle, diameter, diameter);
                 break;
         }
-    }
-
-    public void setShapeType(int type) {
-        shapeType = type;
     }
 }
