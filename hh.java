@@ -1,9 +1,8 @@
-package projetJava;
 
 import java.awt.*;
 import java.awt.event.*;
 
-public class dessin {
+public class hh {
     public static void main(String[] args) {
         FormesFrame frame = new FormesFrame();
         frame.setVisible(true);

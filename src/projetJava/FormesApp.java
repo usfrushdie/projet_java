@@ -2,6 +2,7 @@ package projetJava;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class FormesApp {
     public static void main(String[] args) {
@@ -10,7 +11,21 @@ public class FormesApp {
     }
 }
 
+class Forme {
+    public int x1, y1, x2, y2;
+    public int type;
+
+    public Forme(int x1, int y1, int x2, int y2, int type) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.type = type;
+    }
+}
+
 class FormesFrame extends Frame {
+    private ArrayList<Forme> formes = new ArrayList<>();
     private int x1, y1, x2, y2;
     private int shapeType = 1; // 0: Line, 1: Rectangle, 2: Circle
 
@@ -26,6 +41,7 @@ class FormesFrame extends Frame {
             public void mouseReleased(MouseEvent e) {
                 x2 = e.getX();
                 y2 = e.getY();
+                formes.add(new Forme(x1, y1, x2, y2, shapeType));
                 repaint();
             }
         });
@@ -49,23 +65,25 @@ class FormesFrame extends Frame {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        switch (shapeType) {
-            case 0: // Line
-                g2d.drawLine(x1, y1, x2, y2);
-                break;
-            case 1: // Rectangle
-                int width = Math.abs(x2 - x1);
-                int height = Math.abs(y2 - y1);
-                int upperLeftX = Math.min(x1, x2);
-                int upperLeftY = Math.min(y1, y2);
-                g2d.drawRect(upperLeftX, upperLeftY, width, height);
-                break;
-            case 2: // Circle
-                int diameter = Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1));
-                upperLeftX = x1 < x2 ? x1 : x1 - diameter;
-                upperLeftY = y1 < y2 ? y1 : y1 - diameter;
-                g2d.drawOval(upperLeftX, upperLeftY, diameter, diameter);
-                break;
+        for (Forme forme : formes) {
+            switch (forme.type) {
+                case 0: // Line
+                    g2d.drawLine(forme.x1, forme.y1, forme.x2, forme.y2);
+                    break;
+                case 1: // Rectangle
+                    int width = Math.abs(forme.x2 - forme.x1);
+                    int height = Math.abs(forme.y2 - forme.y1);
+                    int upperLeftX = Math.min(forme.x1, forme.x2);
+                    int upperLeftY = Math.min(forme.y1, forme.y2);
+                    g2d.fillRect(upperLeftX, upperLeftY, width, height); 
+                    break;
+                case 2: // Circle
+                    int diameter = Math.max(Math.abs(forme.x2 - forme.x1), Math.abs(forme.y2 - forme.y1));
+                    int upperLeftXCircle = forme.x1 < forme.x2 ? forme.x1 : forme.x1 - diameter;
+                    int upperLeftYCircle = forme.y1 < forme.y2 ? forme.y1 : forme.y1 - diameter;
+                    g2d.fillOval(upperLeftXCircle, upperLeftYCircle, diameter, diameter); 
+                    break;
+            }
         }
     }
 
