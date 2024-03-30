@@ -2,10 +2,10 @@ package projetJava;
 
 public interface Forme {
 	
-	public void deplacerRect(double dx, double dy);
+	public void deplacerRect(int dx, int dy);
 	
-	public boolean appartientPoint(double x, double y);
+	public boolean appartientPoint(int x, int y);
 	
-	public void redimensionner(double k);
+	public void redimensionner(int k);
 
 }
