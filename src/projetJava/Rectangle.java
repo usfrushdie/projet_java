@@ -65,8 +65,11 @@ public class Rectangle implements Forme {
 	
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.RED);
-		g2.drawRect(x1, y1, x2-x1, y2-y1); //(x1,y,2*r,2*r);
+		g2.setColor(Color.GRAY);
+		if(x1<=x2)
+			g2.fillRect(x1, y1, Math.abs(x2-x1), Math.abs(y2-y1)); //(x1,y,2*r,2*r);
+		else
+			g2.fillRect(x2, y2, Math.abs(x2-x1), Math.abs(y2-y1));
 	}
 
 }

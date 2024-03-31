@@ -10,13 +10,25 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 public class Windowbuilder extends JFrame {
 
     private JPanel contentPane;
+    Rectangle t = new Rectangle(0,0,0,0);
+	ArrayList<Rectangle> r = new ArrayList<Rectangle>();
+    private int shapeType = 1; // 0: Line, 1: Rectangle, 2: Circle
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -39,6 +51,36 @@ public class Windowbuilder extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                t.setX1(e.getX());
+                t.setY1(e.getY());
+            }
+
+            public void mouseReleased(MouseEvent e) {
+            	t.setX2(e.getX());
+                t.setY2(e.getY());
+                r.add(t);
+                t.paint(getGraphics());
+            }
+        });
+        
+
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                dispose();
+            }
+        });
+        
+        this.addKeyListener(new KeyAdapter() {
+		    public void keyPressed(KeyEvent e) {
+		    	char ch = e.getKeyChar();
+		        if (ch == 'q') {
+		            System.exit(0);
+		        }
+		    }
+		});
 
         // Boutons
         JButton btnCircle = new JButton("Circle");
@@ -68,7 +110,7 @@ public class Windowbuilder extends JFrame {
         btnOther.setBounds(280, 84, 113, 47);
         contentPane.add(btnOther);
         
-        JPanel panel = new JPanel();
+        DrawingPanel panel = new DrawingPanel();;
         panel.setBackground(new Color(255, 255, 255));
         panel.setBounds(10, 142, 1074, 625);
         contentPane.add(panel);
@@ -91,4 +133,6 @@ public class Windowbuilder extends JFrame {
                 panel_1.add(lblNewLabel);
                 lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bayah\\OneDrive\\Images\\iTop Screenshot\\chmch2.jpeg"));
     }
+    
+
 }
