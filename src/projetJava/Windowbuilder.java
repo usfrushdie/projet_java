@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -15,13 +17,17 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+<<<<<<< HEAD
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+=======
+>>>>>>> aadbad5700602c7e63680bb105667f13d6f9680a
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
+import java.awt.CardLayout;
 
 public class Windowbuilder extends JFrame {
 
@@ -46,12 +52,14 @@ public class Windowbuilder extends JFrame {
     public Windowbuilder() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 1110, 817);
+        this.setLocation(200,100);;
         contentPane = new JPanel();
         contentPane.setBackground(new Color(128, 128, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
         
+<<<<<<< HEAD
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 t.setX1(e.getX());
@@ -81,6 +89,9 @@ public class Windowbuilder extends JFrame {
 		        }
 		    }
 		});
+=======
+        
+>>>>>>> aadbad5700602c7e63680bb105667f13d6f9680a
 
         // Boutons
         JButton btnCircle = new JButton("Circle");
@@ -106,6 +117,8 @@ public class Windowbuilder extends JFrame {
         btnOther.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	}
+        	
+        
         });
         btnOther.setBounds(280, 84, 113, 47);
         contentPane.add(btnOther);
@@ -126,11 +139,10 @@ public class Windowbuilder extends JFrame {
                 panel_1.setBackground(new Color(255, 255, 255));
                 panel_1.setBounds(0, 0, 1094, 73);
                 contentPane.add(panel_1);
-                panel_1.setLayout(null);
+                panel_1.setLayout(new CardLayout(0, 0));
                 
                 JLabel lblNewLabel = new JLabel("");
-                lblNewLabel.setBounds(10, 15, 65, 51);
-                panel_1.add(lblNewLabel);
+                panel_1.add(lblNewLabel, "name_612034044413900");
                 lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bayah\\OneDrive\\Images\\iTop Screenshot\\chmch2.jpeg"));
     }
     
