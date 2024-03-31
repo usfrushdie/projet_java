@@ -7,9 +7,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 class FormesFrame extends Frame {
-	Rectangle r = new Rectangle(0,0,0,0);
+	Rectangle t = new Rectangle(0,0,0,0);
+	ArrayList<Rectangle> r = new ArrayList<Rectangle>();
     private int shapeType = 1; // 0: Line, 1: Rectangle, 2: Circle
 
     public FormesFrame() {
@@ -17,16 +19,18 @@ class FormesFrame extends Frame {
         setSize(600, 400);
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                r.setX1(e.getX());
-                r.setY1(e.getY());
+                t.setX1(e.getX());
+                t.setY1(e.getY());
             }
 
             public void mouseReleased(MouseEvent e) {
-            	r.setX2(e.getX());
-                r.setY2(e.getY());
-                repaint();
+            	t.setX2(e.getX());
+                t.setY2(e.getY());
+                r.add(t);
+                t.paint(getGraphics());
             }
         });
+        
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -39,10 +43,10 @@ class FormesFrame extends Frame {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         int x1, y1, x2, y2;
-        x1 = r.getX1();
-        y1 = r.getY1();
-        x2 = r.getX2();
-        y2 = r.getY2();
+        x1 = t.getX1();
+        y1 = t.getY1();
+        x2 = t.getX2();
+        y2 = t.getY2();
         switch (shapeType) {
             case 0: // Line
                 g2d.drawLine(x1, y1, x2, y2);
