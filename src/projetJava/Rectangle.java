@@ -71,7 +71,6 @@ public class Rectangle implements Forme {
 		else
 			g2.fillRect(x2, y2, Math.abs(x2-x1), Math.abs(y2-y1));
 
-		g2.setColor(Color.RED);
 		g2.fillRect(x1, y1, x2-x1, y2-y1); //(x1,y,2*r,2*r);
 	}
 

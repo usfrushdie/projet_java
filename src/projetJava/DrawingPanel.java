@@ -15,7 +15,7 @@ public class DrawingPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
     	Rectangle t = new Rectangle(0,0,0,0);
-        super.paintComponent(g);
+        super.paintComponent(g);  
         Graphics2D g2d = (Graphics2D) g;
         int x1, y1, x2, y2;
         x1 = t.getX1();
