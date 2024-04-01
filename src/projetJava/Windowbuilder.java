@@ -58,7 +58,8 @@ public class Windowbuilder extends JFrame {
         contentPane.setLayout(null);
         
 
-        // Bouton
+        // Boutons
+        // Rectangle
         JButton btnRectangle = new JButton("Rectangle");
         btnRectangle.setBackground(new Color(0, 255, 0));
         btnRectangle.addActionListener(new ActionListener() {
@@ -68,6 +69,27 @@ public class Windowbuilder extends JFrame {
         });
         btnRectangle.setBounds(20, 85, 113, 47);
         contentPane.add(btnRectangle);
+        
+        //Intersection
+        JButton btnNewButton = new JButton("");
+        btnNewButton.setBackground(new Color(255, 255, 255));
+        btnNewButton.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/intersection2.jpeg")));
+        btnNewButton.setBounds(175, 85, 113, 47);
+        contentPane.add(btnNewButton);
+        
+        //Union
+        JButton btnNewButton_1 = new JButton("");
+        btnNewButton_1.setBackground(new Color(255, 255, 255));
+        btnNewButton_1.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/union.jpeg")));
+        btnNewButton_1.setBounds(330, 85, 113, 47);
+        contentPane.add(btnNewButton_1);
+        
+        //Minus
+        JButton btnNewButton_2 = new JButton("");
+        btnNewButton_2.setBackground(new Color(255, 255, 255));
+        btnNewButton_2.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/minus.jpeg")));
+        btnNewButton_2.setBounds(485, 85, 113, 47);
+        contentPane.add(btnNewButton_2);
         
         // Plan de dessin
         final DrawingPanel panel = new DrawingPanel(); // de type 'final' afin que les conditions dans 'mousePressed' et 'mouseReleased' fonctionnent
@@ -92,9 +114,8 @@ public class Windowbuilder extends JFrame {
         // LOGO
         JLabel lblNewLabel = new JLabel("");
         panel_1.add(lblNewLabel, "name_612034044413900");
-        lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bayah\\OneDrive\\Images\\iTop Screenshot\\chmch2.jpeg"));
-                
-
+        lblNewLabel.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/logo.jpeg")));
+        
         
         panel.addMouseListener(new MouseAdapter() {
 	        public void mousePressed(MouseEvent e) {
@@ -126,6 +147,4 @@ public class Windowbuilder extends JFrame {
         
       
     }
-    
-    
 }
