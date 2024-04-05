@@ -5,8 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class Rectangle implements Forme {
-	
+		
 	private int x1, x2, y1, y2;
+	
 
 	public Rectangle(int x1, int x2, int y1, int y2) {
 		this.x1 = x1;
@@ -46,6 +47,14 @@ public class Rectangle implements Forme {
 	public void setY2(int y2) {
 		this.y2 = y2;
 	}
+	
+	public int getWidth() {
+        return Math.abs(x2 - x1);
+    }
+
+    public int getHeight() {
+        return Math.abs(y2 - y1);
+    }
 
 	public void deplacerRect(int dx, int dy) {
 		this.x1 += dx;
@@ -63,9 +72,29 @@ public class Rectangle implements Forme {
 		this.y2 *= k;
 	}
 	
+	
+	public void paint(Graphics g) {
+	    Graphics2D g2 = (Graphics2D) g;
+	    g2.setColor(Color.RED);
+	    
+	    int width = getWidth();
+	    int height = getHeight();
+	    
+	    if(x1 <= x2 && y1 <= y2) {
+	        g2.fillRect(x1, y1, width, height);
+	    } else if (x1 <= x2 && y1 > y2) {
+	        g2.fillRect(x1, y2, width, height);
+	    } else if (x1 > x2 && y1 <= y2) {
+	        g2.fillRect(x2, y1, width, height);
+	    } else {
+	        g2.fillRect(x2, y2, width, height);
+	    }
+	}
+	
+	/*
 	public void paint(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.GRAY);
+		g2.setColor(Color.PINK);
 		if(x1<=x2)
 			g2.fillRect(x1, y1, Math.abs(x2-x1), Math.abs(y2-y1)); //(x1,y,2*r,2*r);
 		else
@@ -73,5 +102,6 @@ public class Rectangle implements Forme {
 
 		g2.fillRect(x1, y1, x2-x1, y2-y1); //(x1,y,2*r,2*r);
 	}
+	*/
 
 }

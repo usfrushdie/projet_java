@@ -3,36 +3,59 @@ package projetJava;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class DrawingPanel extends JPanel {
     
-    public DrawingPanel() {
-        setBackground(Color.WHITE); // Couleur de fond
-    }
+    private Rectangle selectedShape = null;
+    private ArrayList<Rectangle> shapes = new ArrayList<>();
 
-    @Override
-    protected void paintComponent(Graphics g) {
-    	Rectangle t = new Rectangle(0,0,0,0);
-        super.paintComponent(g);  
-        Graphics2D g2d = (Graphics2D) g;
-        int x1, y1, x2, y2;
-        x1 = t.getX1();
-        y1 = t.getY1();
-        x2 = t.getX2();
-        y2 = t.getY2();
+    public DrawingPanel() {
+        setBackground(Color.WHITE);
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                for (Rectangle shape : shapes) {
+                    if (shape.appartientPoint(e.getX(), e.getY())) {
+                        selectedShape = shape;
+                        break;
+                    }
+                }
+            }
+
+            public void mouseReleased(MouseEvent e) {
+                selectedShape = null;
+            }
+        });
         
-		int width = Math.abs(x2 - x1);
-		int height = Math.abs(y2 - y1);
-		int upperLeftX = Math.min(x1, x2);
-		int upperLeftY = Math.min(y1, y2);
-		g2d.drawRect(upperLeftX, upperLeftY, width, height);
-	
+        addMouseMotionListener(new MouseAdapter() {
+            public void mouseDragged(MouseEvent e) {
+                if (selectedShape != null) {
+                    selectedShape.deplacerRect(e.getX() - selectedShape.getX1(), e.getY() - selectedShape.getY1());
+                    repaint();
+                }
+            }
+        });
     }
     
-    public void paint(Graphics g) {
-    	Rectangle t = new Rectangle(0,0,0,0);
-        super.paint(g);      
+    public void clearShapes() {
+        shapes.clear(); 
+        repaint(); 
+    }
+
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        for (Rectangle shape : shapes) {
+            shape.paint(g2d);
+        }
+    }
+
+    public void addShape(Rectangle shape) {
+        shapes.add(shape);
+        repaint();
     }
 }

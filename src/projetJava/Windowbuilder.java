@@ -57,6 +57,12 @@ public class Windowbuilder extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
         
+        // Plan de dessin
+        final DrawingPanel panel = new DrawingPanel(); // de type 'final' afin que les conditions dans 'mousePressed' et 'mouseReleased' fonctionnent
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBounds(10, 142, 1074, 625);
+        contentPane.add(panel);
+        
 
         // Boutons
         // Rectangle
@@ -91,11 +97,18 @@ public class Windowbuilder extends JFrame {
         btnNewButton_2.setBounds(485, 85, 113, 47);
         contentPane.add(btnNewButton_2);
         
-        // Plan de dessin
-        final DrawingPanel panel = new DrawingPanel(); // de type 'final' afin que les conditions dans 'mousePressed' et 'mouseReleased' fonctionnent
-        panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(10, 142, 1074, 625);
-        contentPane.add(panel);
+      //Clear
+        JButton btnNewButton_3 = new JButton("Clear");
+        btnNewButton_3.setBackground(new Color(255, 255, 128));
+        btnNewButton_3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                panel.clearShapes(); // Pour vider le panneau
+            }
+        });
+        btnNewButton_3.setBounds(960, 85, 113, 47);
+        contentPane.add(btnNewButton_3);
+        
+        //Fin Boutons
         
         // Titre
         JLabel lblFormsEditor = new JLabel("PolyMorph : Design your dreams");
@@ -117,6 +130,8 @@ public class Windowbuilder extends JFrame {
         lblNewLabel.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/logo.jpeg")));
         
         
+        
+        
         panel.addMouseListener(new MouseAdapter() {
 	        public void mousePressed(MouseEvent e) {
 	        // Vérifie si le clic de souris est à l'intérieur du panel
@@ -125,17 +140,16 @@ public class Windowbuilder extends JFrame {
 	        			t.setY1(e.getY());
 	            }
 	        }
-
+	        
 	        public void mouseReleased(MouseEvent e) {
 	        // Vérifie si le relâchement de la souris est à l'intérieur du panel
-	        	if ( enableDrawing && e.getX() >= 0 && e.getX() <= panel.getWidth() && e.getY() >= 0 && e.getY() <= panel.getHeight()) {
-	        		t.setX2(e.getX());
-	                t.setY2(e.getY());
-	                r.add(t); // ajout du rectangle t à la liste r définie au début
-	                t.paint(panel.getGraphics());
-	                enableDrawing = false; // réinitialise la variable à son état d'origine (interdit le dessin de nouveaux rectangles sans recliquer sur le bouton 'Rectangle')
-	            }
-	        }	
+            if (enableDrawing && e.getX() >= 0 && e.getX() <= panel.getWidth() && e.getY() >= 0 && e.getY() <= panel.getHeight()) {
+                t.setX2(e.getX());
+                t.setY2(e.getY());
+                panel.addShape(new Rectangle(t.getX1(), t.getX2(), t.getY1(), t.getY2()));
+	            enableDrawing = false; // réinitialise la variable à son état d'origine (interdit le dessin de nouveaux rectangles sans recliquer sur le bouton 'Rectangle')
+           }
+           }      
         });
         
         addWindowListener(new WindowAdapter() {
