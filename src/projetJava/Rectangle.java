@@ -17,7 +17,7 @@ public class Rectangle implements Forme {
 	}
 
 	public int getX1() {
-		return x1;
+		return Math.min(x1,x2);
 	}
 
 	public void setX1(int x1) {
@@ -25,7 +25,7 @@ public class Rectangle implements Forme {
 	}
 
 	public int getX2() {
-		return x2;
+		return Math.max(x2, x1);
 	}
 
 	public void setX2(int x2) {
@@ -33,7 +33,7 @@ public class Rectangle implements Forme {
 	}
 
 	public int getY1() {
-		return y1;
+		return Math.min(y1,y2);
 	}
 
 	public void setY1(int y1) {
@@ -41,7 +41,7 @@ public class Rectangle implements Forme {
 	}
 
 	public int getY2() {
-		return y2;
+		return Math.max(y2,y1);
 	}
 
 	public void setY2(int y2) {
@@ -64,7 +64,12 @@ public class Rectangle implements Forme {
 	}
 	
 	public boolean appartientPoint(int x, int y) {
-		return (x>=x1)&&(x<=x2)&&(y>=y1)&&(y<=y2);
+	    int minX = Math.min(x1, x2);
+	    int minY = Math.min(y1, y2);
+	    int maxX = Math.max(x1, x2);
+	    int maxY = Math.max(y1, y2);
+	    
+	    return (x >= minX && x <= maxX && y >= minY && y <= maxY);
 	}
 	
 	public void redimensionner(int k) {
