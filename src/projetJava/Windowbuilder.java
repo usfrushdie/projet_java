@@ -26,8 +26,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.CardLayout;
 
-public class Windowbuilder extends JFrame {
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
+public class Windowbuilder extends JFrame {
+	
+	private DrawingPanel panel;
     private JPanel contentPane;
     Rectangle t = new Rectangle(0,0,0,0); // temporaire
 	ArrayList<Rectangle> r = new ArrayList<Rectangle>(); 
@@ -58,7 +66,7 @@ public class Windowbuilder extends JFrame {
         contentPane.setLayout(null);
         
         // Plan de dessin
-        final DrawingPanel panel = new DrawingPanel(); // de type 'final' afin que les conditions dans 'mousePressed' et 'mouseReleased' fonctionnent
+        panel = new DrawingPanel(); // de type 'final' afin que les conditions dans 'mousePressed' et 'mouseReleased' fonctionnent
         panel.setBackground(new Color(255, 255, 255));
         panel.setBounds(10, 142, 1074, 625);
         contentPane.add(panel);
@@ -108,6 +116,17 @@ public class Windowbuilder extends JFrame {
         btnNewButton_3.setBounds(960, 85, 113, 47);
         contentPane.add(btnNewButton_3);
         
+        //Save
+        JButton btnSave = new JButton("Save");
+        btnSave.setBackground(new Color(255, 255, 128));
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveDrawing(); 
+            }
+        });
+        btnSave.setBounds(826, 85, 113, 47);
+        contentPane.add(btnSave);
+        
         //Fin Boutons
         
         // Titre
@@ -129,8 +148,7 @@ public class Windowbuilder extends JFrame {
         panel_1.add(lblNewLabel, "name_612034044413900");
         lblNewLabel.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/logo.jpeg")));
         
-        
-        
+
         
         panel.addMouseListener(new MouseAdapter() {
 	        public void mousePressed(MouseEvent e) {
@@ -158,7 +176,16 @@ public class Windowbuilder extends JFrame {
             }
         });
         
-        
-      
+    }
+    
+    private void saveDrawing() {
+        BufferedImage image = panel.getPanelImage();
+        try {
+            File outputFile = new File("forms.png"); // L'image se crée dans le repertoire actuel (src)
+            ImageIO.write(image, "png", outputFile);
+            
+        } catch (IOException ex) {
+            System.out.println("Erreur lors de l'enregistrement de l'image : " + ex.getMessage());
+        }
     }
 }

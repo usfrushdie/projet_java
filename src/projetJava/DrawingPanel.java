@@ -8,6 +8,11 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 public class DrawingPanel extends JPanel {
     
     private Rectangle selectedShape = null;
@@ -58,4 +63,14 @@ public class DrawingPanel extends JPanel {
         shapes.add(shape);
         repaint();
     }
+    
+    public BufferedImage getPanelImage() {
+        BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+        paint(g2d);
+        g2d.dispose();
+        return image;
+    }
+    
+    
 }
