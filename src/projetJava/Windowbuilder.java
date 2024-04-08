@@ -130,7 +130,7 @@ public class Windowbuilder extends JFrame {
         btnSave.setBackground(new Color(255, 255, 128));
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                saveDrawing(); 
+                saveAsPng(); 
             }
         });
         btnSave.setBounds(826, 85, 113, 47);
@@ -211,7 +211,7 @@ public class Windowbuilder extends JFrame {
         
     }
     
-    private void saveDrawing() {
+    private void saveAsPng() {
         BufferedImage image = panel.getPanelImage();
         try {
             File outputFile = new File("forms.png"); // L'image se cree dans le repertoire actuel (src)
