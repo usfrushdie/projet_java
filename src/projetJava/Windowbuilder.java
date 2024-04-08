@@ -117,7 +117,7 @@ public class Windowbuilder extends JFrame {
         contentPane.add(btnNewButton_3);
         
         //Save
-        JButton btnSave = new JButton("Save");
+        JButton btnSave = new JButton("Save as png");
         btnSave.setBackground(new Color(255, 255, 128));
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
