@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.Serializable;
 
-public class Rectangle implements Forme{
+public class Rectangle implements Forme,Serializable{
 		
 	private int x1, x2, y1, y2;
 
