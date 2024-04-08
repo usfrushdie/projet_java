@@ -28,10 +28,15 @@ import java.awt.CardLayout;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 public class Windowbuilder extends JFrame {
 	
@@ -40,7 +45,7 @@ public class Windowbuilder extends JFrame {
     Rectangle t = new Rectangle(0,0,0,0); // temporaire
 	ArrayList<Rectangle> r = new ArrayList<Rectangle>(); 
     //private int shapeType = 1; // 0: Line, 1: Rectangle, 2: Circle 
-	private boolean enableDrawing = false; // pour vérifier si le bouton rectangle est cliqué ou non
+	private boolean enableDrawing = false; // pour verifier si le bouton rectangle est clique ou non
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -81,28 +86,32 @@ public class Windowbuilder extends JFrame {
         		enableDrawing = !enableDrawing; // on peut dessiner après que la variable est true
         	}
         });
-        btnRectangle.setBounds(20, 85, 113, 47);
+        btnRectangle.setBounds(20, 85, 99, 47);
         contentPane.add(btnRectangle);
         
         //Intersection
         JButton btnNewButton = new JButton("");
         btnNewButton.setBackground(new Color(255, 255, 255));
         btnNewButton.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/intersection2.jpeg")));
-        btnNewButton.setBounds(175, 85, 113, 47);
+        btnNewButton.setBounds(195, 85, 48, 47);
         contentPane.add(btnNewButton);
         
         //Union
         JButton btnNewButton_1 = new JButton("");
         btnNewButton_1.setBackground(new Color(255, 255, 255));
         btnNewButton_1.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/union.jpeg")));
-        btnNewButton_1.setBounds(330, 85, 113, 47);
+        btnNewButton_1.setBounds(265, 85, 48, 47);
         contentPane.add(btnNewButton_1);
         
         //Minus
         JButton btnNewButton_2 = new JButton("");
+        btnNewButton_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         btnNewButton_2.setBackground(new Color(255, 255, 255));
         btnNewButton_2.setIcon(new ImageIcon(Windowbuilder.class.getResource("/Images/minus.jpeg")));
-        btnNewButton_2.setBounds(485, 85, 113, 47);
+        btnNewButton_2.setBounds(335, 85, 48, 47);
         contentPane.add(btnNewButton_2);
         
       //Clear
@@ -116,7 +125,7 @@ public class Windowbuilder extends JFrame {
         btnNewButton_3.setBounds(960, 85, 113, 47);
         contentPane.add(btnNewButton_3);
         
-        //Save
+        //Save as png
         JButton btnSave = new JButton("Save as png");
         btnSave.setBackground(new Color(255, 255, 128));
         btnSave.addActionListener(new ActionListener() {
@@ -126,6 +135,28 @@ public class Windowbuilder extends JFrame {
         });
         btnSave.setBounds(826, 85, 113, 47);
         contentPane.add(btnSave);
+        
+        //Load
+        JButton btnLoad = new JButton("Load");
+        btnLoad.setBackground(new Color(255, 255, 128));
+        btnLoad.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                loadDrawing(); // Appel de la methode pour charger le dessin
+            }
+        });
+        btnLoad.setBounds(692, 85, 113, 47);
+        contentPane.add(btnLoad);
+        
+        //Save as Ser
+        JButton btnSave_1 = new JButton("Save as Ser");
+        btnSave_1.setBackground(new Color(255, 255, 128));
+        btnSave_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveAsSerialized();
+            }
+        });
+        btnSave_1.setBounds(553, 85, 113, 47);
+        contentPane.add(btnSave_1);
         
         //Fin Boutons
         
@@ -150,9 +181,11 @@ public class Windowbuilder extends JFrame {
         
 
         
+
+        
         panel.addMouseListener(new MouseAdapter() {
 	        public void mousePressed(MouseEvent e) {
-	        // Vérifie si le clic de souris est à l'intérieur du panel
+	        // Verifie si le clic de souris est à l'interieur du panel
 	        	if ( enableDrawing && e.getX() >= 0 && e.getX() <= panel.getWidth() && e.getY() >= 0 && e.getY() <= panel.getHeight()) {
 	        			t.setX1(e.getX());
 	        			t.setY1(e.getY());
@@ -160,12 +193,12 @@ public class Windowbuilder extends JFrame {
 	        }
 	        
 	        public void mouseReleased(MouseEvent e) {
-	        // Vérifie si le relâchement de la souris est à l'intérieur du panel
+	        // Verifie si le relâchement de la souris est à l'interieur du panel
             if (enableDrawing && e.getX() >= 0 && e.getX() <= panel.getWidth() && e.getY() >= 0 && e.getY() <= panel.getHeight()) {
                 t.setX2(e.getX());
                 t.setY2(e.getY());
                 panel.addShape(new Rectangle(t.getX1(), t.getX2(), t.getY1(), t.getY2()));
-	            enableDrawing = false; // réinitialise la variable à son état d'origine (interdit le dessin de nouveaux rectangles sans recliquer sur le bouton 'Rectangle')
+	            enableDrawing = false; // reinitialise la variable à son etat d'origine (interdit le dessin de nouveaux rectangles sans recliquer sur le bouton 'Rectangle')
            }
            }      
         });
@@ -181,11 +214,68 @@ public class Windowbuilder extends JFrame {
     private void saveDrawing() {
         BufferedImage image = panel.getPanelImage();
         try {
-            File outputFile = new File("forms.png"); // L'image se crée dans le repertoire actuel (src)
+            File outputFile = new File("forms.png"); // L'image se cree dans le repertoire actuel (src)
             ImageIO.write(image, "png", outputFile);
             
         } catch (IOException ex) {
             System.out.println("Erreur lors de l'enregistrement de l'image : " + ex.getMessage());
         }
     }
+    
+
+    private void saveAsSerialized() {
+        try {
+            // Capture du contenu de la fenetre en tant qu'image (Probleme de capture du haut panel aussi)
+            BufferedImage image = new BufferedImage(contentPane.getWidth(), contentPane.getHeight(), BufferedImage.TYPE_INT_RGB);
+            contentPane.paint(image.getGraphics());
+
+            // Enregistrer l'image dans un fichier temporaire
+            File tempFile = File.createTempFile("window_content", ".png");
+            ImageIO.write(image, "png", tempFile);
+
+            // Enregistrer le chemin du fichier temporaire dans le fichier .ser
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("window_content.ser"));
+            objectOutputStream.writeObject(tempFile.getAbsolutePath());
+            objectOutputStream.close();
+
+            } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadDrawing() {
+        // Creer une boîte de dialogue de selection de fichier
+        JFileChooser fileChooser = new JFileChooser();
+        
+        // Definir le filtre de fichier pour ne montrer que les fichiers .ser
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Serialized files", "ser"));
+        
+        // Afficher la boîte de dialogue de selection de fichier
+        int result = fileChooser.showOpenDialog(this);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            try {
+                // Obtenir le fichier selectionne
+                File selectedFile = fileChooser.getSelectedFile();
+                
+                // Charger l'image à partir du fichier selectionne
+                ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(selectedFile));
+                String imagePath = (String) objectInputStream.readObject();
+                objectInputStream.close();
+                
+                // Charger l'image à partir du chemin du fichier
+                BufferedImage loadedImage = ImageIO.read(new File(imagePath));
+                
+                // Afficher l'image dans le panneau
+                Graphics g = panel.getGraphics();
+                g.drawImage(loadedImage, 0, 0, null);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
 }
