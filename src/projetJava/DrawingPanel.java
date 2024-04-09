@@ -64,6 +64,15 @@ public class DrawingPanel extends JPanel {
         repaint();
     }
     
+    public ArrayList<Rectangle> getShapes() {
+        return shapes;
+    }
+    
+    public void setShapes(ArrayList<Rectangle> shapes) {
+        this.shapes = shapes;
+        repaint(); // Repaint to reflect the updated shapes
+    }
+    
     public BufferedImage getPanelImage() {
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = image.createGraphics();
