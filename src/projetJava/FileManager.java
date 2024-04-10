@@ -15,11 +15,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 public class FileManager {
 	private DrawingPanel panel;
 	private WindowFrame windowFrame;
+    private ServerInterface server;
 
-	
+    
 	public void setWindowFrame(WindowFrame windowFrame) {
         this.windowFrame = windowFrame;
     }
@@ -32,8 +36,23 @@ public class FileManager {
 	    this.panel = panel;
 	}
 	
-	
-	
+	public void saveAsSerializedToRemote(String ipAddress) {
+        try {
+            Registry registry = LocateRegistry.getRegistry(ipAddress, 1099);
+            server = (ServerInterface) registry.lookup("Server");
+
+            // Recuperer les formes depuis le panneau
+            ArrayList<Rectangle> shapes = panel.getShapes();
+
+            // Appeler la methode distante pour sauvegarder les formes
+            server.saveShapes(shapes);
+
+            System.out.println("Formes sauvegardees avec succès sur la machine distante.");
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la sauvegarde des formes sur la machine distante : " + e.getMessage());
+        }
+    }
+
 	protected void saveAsPng() {
         BufferedImage image = panel.getPanelImage();
         try {
@@ -52,11 +71,11 @@ public class FileManager {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         String fileName = "Sauvegarde_" + timeStamp + ".ser"; // Nom du fichier avec timestamp
 
-        File fileToSave = new File(fileName); // Crée un objet File avec le chemin actuel (src) + nom du fichier
+        File fileToSave = new File(fileName); // Cree un objet File avec le chemin actuel (src) + nom du fichier
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileToSave))) {
             oos.writeObject(panel.getShapes()); 
-            System.out.println("Fichier sauvegardé dans : " + fileToSave.getAbsolutePath());
+            System.out.println("Fichier sauvegarde dans : " + fileToSave.getAbsolutePath());
         } catch (IOException ex) {
             System.err.println("Erreur lors de la sauvegarde: " + ex.getMessage());
         }
@@ -66,7 +85,7 @@ public class FileManager {
     protected void loadFromSerializedFile(WindowFrame parentFrame) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choisissez un fichier à charger");
-        int userSelection = fileChooser.showOpenDialog(parentFrame); // Pour contenir le resultat du choix de l'utilisateur : il a choisi ouvrir ou annuler
+        int userSelection = fileChooser.showOpenDialog(parentFrame); // Pour contenir le resultat du choix de l'utilisateur : s'il a choisi ouvrir ou annuler
         
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToLoad = fileChooser.getSelectedFile();
@@ -75,14 +94,14 @@ public class FileManager {
                 // Efface les formes actuelles
                 panel.clearShapes();
                 
-                // Lecture et ajout des formes à partir du fichier
-                @SuppressWarnings("unchecked") // Pour eviter les erreurs de compilation (contrainte de type générique : objet <=> ArrayList<Rectangle>)
+                // Lecture et ajout des formes a partir du fichier
+                @SuppressWarnings("unchecked") // Pour eviter les erreurs de compilation (contrainte de type generique : objet <=> ArrayList<Rectangle>)
                 ArrayList<Rectangle> loadedShapes = (ArrayList<Rectangle>) ois.readObject();
                 for (Rectangle shape : loadedShapes) {
                     panel.addShape(shape);
                 }
                 
-                panel.repaint(); // Redessine le panel avec les formes chargées
+                panel.repaint(); // Redessine le panel avec les formes chargees
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Erreur lors du chargement du fichier: " + ex.getMessage());
             }

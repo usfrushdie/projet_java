@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -49,7 +50,6 @@ public class WindowFrame extends JFrame{
         fileManager.setPanel(panel);
 
         
-
         // Boutons
         // Rectangle
         JButton btnRectangle = new JButton("Rectangle");
@@ -66,14 +66,14 @@ public class WindowFrame extends JFrame{
         JButton btnNewButton = new JButton("");
         btnNewButton.setBackground(new Color(255, 255, 255));
         btnNewButton.setIcon(new ImageIcon(WindowFrame.class.getResource("/Images/intersection2.jpeg")));
-        btnNewButton.setBounds(195, 85, 48, 47);
+        btnNewButton.setBounds(145, 85, 48, 47);
         contentPane.add(btnNewButton);
         
         //Union
         JButton btnNewButton_1 = new JButton("");
         btnNewButton_1.setBackground(new Color(255, 255, 255));
         btnNewButton_1.setIcon(new ImageIcon(WindowFrame.class.getResource("/Images/union.jpeg")));
-        btnNewButton_1.setBounds(265, 85, 48, 47);
+        btnNewButton_1.setBounds(203, 85, 48, 47);
         contentPane.add(btnNewButton_1);
         
         //Minus
@@ -84,7 +84,7 @@ public class WindowFrame extends JFrame{
         });
         btnNewButton_2.setBackground(new Color(255, 255, 255));
         btnNewButton_2.setIcon(new ImageIcon(WindowFrame.class.getResource("/Images/minus.jpeg")));
-        btnNewButton_2.setBounds(335, 85, 48, 47);
+        btnNewButton_2.setBounds(261, 84, 48, 47);
         contentPane.add(btnNewButton_2);
         
       //Clear
@@ -119,6 +119,21 @@ public class WindowFrame extends JFrame{
         });
         btnSave_1.setBounds(560, 85, 113, 47);
         contentPane.add(btnSave_1);
+        
+     // Bouton Distant saving
+        JButton btnDistantSaving = new JButton("Distant saving");
+        btnDistantSaving.setBackground(new Color(255, 255, 128));
+        btnDistantSaving.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String ipAddress = JOptionPane.showInputDialog(WindowFrame.this, "Entrez l'adresse IP de la machine distante:");
+                if (ipAddress != null && !ipAddress.isEmpty()) {
+                    // Utiliser l'adresse IP pour sauvegarder les formes dessinées
+                    fileManager.saveAsSerializedToRemote(ipAddress);
+                }
+            }
+        });
+        btnDistantSaving.setBounds(420, 85, 120, 47);
+        contentPane.add(btnDistantSaving);
         
         //Fin Boutons
         
