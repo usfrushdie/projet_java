@@ -1,6 +1,8 @@
-package projetJava;
+package Main;
 
 import java.awt.EventQueue;
+
+import Graphics.WindowFrame;
 
 public class Main {
 

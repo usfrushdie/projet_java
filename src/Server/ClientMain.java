@@ -1,10 +1,11 @@
-package projetJava;
-
-
 /*
+package Server;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+
+import projetJava.Rectangle;
 
 public class ClientMain {
 	
@@ -30,5 +31,6 @@ public class ClientMain {
     }
 }
 */
+
 
 

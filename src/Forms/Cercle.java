@@ -1,4 +1,4 @@
-package projetJava;
+package Forms;
 
 public class Cercle {
 	

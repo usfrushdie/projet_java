@@ -1,4 +1,4 @@
-package projetJava;
+package Server;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+
+import Forms.Rectangle;
 
 public class ServerImplementation extends UnicastRemoteObject implements ServerInterface {
     protected ServerImplementation() throws RemoteException {

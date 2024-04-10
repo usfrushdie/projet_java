@@ -1,4 +1,4 @@
-package projetJava;
+package Graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+
+import Forms.Rectangle;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

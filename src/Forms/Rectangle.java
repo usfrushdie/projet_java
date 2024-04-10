@@ -1,4 +1,4 @@
-package projetJava;
+package Forms;
 
 import java.awt.Color;
 import java.awt.Graphics;
