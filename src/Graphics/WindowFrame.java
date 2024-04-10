@@ -20,10 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Files.FileManager;
 import Forms.Rectangle;
-import Methodes.FileManager;
-
-import Methodes.FileManager;
 
 public class WindowFrame extends JFrame{
 	private DrawingPanel panel;
