@@ -1,6 +1,7 @@
 package Files;
 
 import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,6 +21,7 @@ import Graphics.DrawingPanel;
 import Graphics.WindowFrame;
 import Server.ServerInterface;
 
+import java.rmi.ConnectException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -41,7 +43,7 @@ public class FileManager {
 	    this.panel = panel;
 	}
 	
-	public void saveAsSerializedToRemote(String ipAddress) {
+	public void distantSaveAsSerialized(String ipAddress) {
         try {
             Registry registry = LocateRegistry.getRegistry(ipAddress, 1099);
             server = (ServerInterface) registry.lookup("Server");
@@ -52,18 +54,20 @@ public class FileManager {
             // Appeler la methode distante pour sauvegarder les formes
             server.saveShapes(shapes);
 
-            System.out.println("Formes sauvegardees avec succès sur la machine distante.");
+            System.out.println("Formes sauvegardées avec succès sur la machine distante.");
+        } catch (ConnectException e) {
+            System.err.println("Impossible de se connecter au registre RMI. Assurez-vous que le serveur RMI est en cours d'exécution sur l'adresse IP spécifiée.");
         } catch (Exception e) {
             System.err.println("Erreur lors de la sauvegarde des formes sur la machine distante : " + e.getMessage());
         }
     }
 
-	public void saveAsPng() {
+	public void exportAsPng() {
         BufferedImage image = panel.getPanelImage();
         try {
         	// On utilise une date en nom du fichier pour qu'on puisse sauvegarder plusieurs fichiers sans ecraser les anciens
         	String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
-            File outputFile = new File("Image" + timeStamp +".png"); // L'image se cree dans le repertoire actuel (src)
+            File outputFile = new File("Image" + timeStamp +".png"); // L'image se cree dans le repertoire actuel
             ImageIO.write(image, "png", outputFile);
             
         } catch (IOException ex) {
@@ -76,7 +80,7 @@ public class FileManager {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         String fileName = "Sauvegarde_" + timeStamp + ".ser"; // Nom du fichier avec timestamp
 
-        File fileToSave = new File(fileName); // Cree un objet File avec le chemin actuel (src) + nom du fichier
+        File fileToSave = new File(fileName); // Cree un objet File avec le chemin actuel + nom du fichier
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileToSave))) {
             oos.writeObject(panel.getShapes()); 

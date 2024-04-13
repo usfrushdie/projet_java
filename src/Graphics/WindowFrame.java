@@ -33,6 +33,7 @@ public class WindowFrame extends JFrame{
 
 	
 	public WindowFrame() {
+
         fileManager = new FileManager();
         fileManager.setWindowFrame(this);
 		
@@ -102,15 +103,15 @@ public class WindowFrame extends JFrame{
         btnNewButton_3.setBounds(950, 85, 113, 47);
         contentPane.add(btnNewButton_3);
         
-        //Save as png
-        JButton btnSave = new JButton("Save as PNG");
+        //Export as png
+        JButton btnSave = new JButton("Export as PNG");
         btnSave.setBackground(new Color(255, 255, 128));
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	fileManager.saveAsPng(); 
+            	fileManager.exportAsPng(); 
             }
         });
-        btnSave.setBounds(690, 84, 113, 47);
+        btnSave.setBounds(617, 84, 125, 47);
         contentPane.add(btnSave);
         
         //Save as Ser
@@ -121,7 +122,7 @@ public class WindowFrame extends JFrame{
             	fileManager.saveAsSerialized();
             }
         });
-        btnSave_1.setBounds(560, 85, 113, 47);
+        btnSave_1.setBounds(494, 84, 113, 47);
         contentPane.add(btnSave_1);
         
      // Bouton Distant saving
@@ -132,11 +133,11 @@ public class WindowFrame extends JFrame{
                 String ipAddress = JOptionPane.showInputDialog(WindowFrame.this, "Entrez l'adresse IP de la machine distante:");
                 if (ipAddress != null && !ipAddress.isEmpty()) {
                     // Utiliser l'adresse IP pour sauvegarder les formes dessinées
-                    fileManager.saveAsSerializedToRemote(ipAddress);
+                    fileManager.distantSaveAsSerialized(ipAddress);
                 }
             }
         });
-        btnDistantSaving.setBounds(420, 85, 120, 47);
+        btnDistantSaving.setBounds(364, 85, 120, 47);
         contentPane.add(btnDistantSaving);
         
         //Fin Boutons

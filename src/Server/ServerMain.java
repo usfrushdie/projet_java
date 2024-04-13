@@ -1,24 +1,40 @@
 package Server;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 
-public class ServerMain {
+import Forms.Rectangle;
+
+public class ServerMain extends UnicastRemoteObject implements ServerInterface {
+    protected ServerMain() throws RemoteException {
+        super();
+    }
+
+    @Override
+    public void saveShapes(ArrayList<Rectangle> shapes) throws RemoteException {
+        // Implémentation de la logique de sauvegarde des formes sur la machine distante
+    }
+
     public static void main(String[] args) {
         try {
-            // Creer un objet de l'implémentation serveur
-            ServerInterface server = new ServerImplementation();
+            ServerMain obj = new ServerMain();
+            // Exporte l'objet distant
+            ServerInterface stub = (ServerInterface) obj;
 
-            // Demarrer un registre RMI sur le port spécifié (1099 par défaut)
-            Registry registry = LocateRegistry.createRegistry(1099);
+            // Crée le registre RMI
+            LocateRegistry.createRegistry(1099);
 
-            // Lier l'objet de l'implémentation serveur avec un nom dans le registre
-            registry.rebind("Server", server);
+            // Enregistre l'objet distant dans le registre
+            Registry registry = LocateRegistry.getRegistry();
+            registry.rebind("Server", stub);
 
-            System.out.println("Serveur RMI prêt.");
+            System.out.println("Server ready");
         } catch (Exception e) {
-            System.err.println("Erreur lors du démarrage du serveur : " + e.getMessage());
+            System.err.println("Server exception: " + e.toString());
+            e.printStackTrace();
         }
     }
 }
-
