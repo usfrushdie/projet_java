@@ -9,5 +9,3 @@ import Forms.Rectangle;
 public interface ServerInterface extends Remote {
     void saveShapes(ArrayList<Rectangle> shapes) throws RemoteException;
 }
-
-

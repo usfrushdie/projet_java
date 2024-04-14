@@ -2,6 +2,7 @@ package Graphics;
 
 import java.awt.CardLayout;
 
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,13 +23,15 @@ import javax.swing.border.EmptyBorder;
 
 import Files.FileManager;
 import Forms.Rectangle;
+import javax.swing.JColorChooser;
+
 
 public class WindowFrame extends JFrame{
 	private DrawingPanel panel;
     private JPanel contentPane;
 	private boolean enableDrawing = false; // pour verifier si le bouton rectangle est clique ou non
 	private FileManager fileManager;
-    Rectangle t = new Rectangle(0,0,0,0); // temporaire
+    Rectangle t = new Rectangle(0,0,0,0,Color.RED); // temporaire
 
 
 	
@@ -89,7 +92,7 @@ public class WindowFrame extends JFrame{
         });
         btnNewButton_2.setBackground(new Color(255, 255, 255));
         btnNewButton_2.setIcon(new ImageIcon(WindowFrame.class.getResource("/Images/minus.jpeg")));
-        btnNewButton_2.setBounds(261, 84, 48, 47);
+        btnNewButton_2.setBounds(261, 85, 48, 47);
         contentPane.add(btnNewButton_2);
         
       //Clear
@@ -100,7 +103,7 @@ public class WindowFrame extends JFrame{
                 panel.clearShapes(); // Pour vider le panneau
             }
         });
-        btnNewButton_3.setBounds(950, 85, 113, 47);
+        btnNewButton_3.setBounds(988, 85, 75, 47);
         contentPane.add(btnNewButton_3);
         
         //Export as png
@@ -114,7 +117,7 @@ public class WindowFrame extends JFrame{
         btnSave.setBounds(617, 84, 125, 47);
         contentPane.add(btnSave);
         
-        //Save as Ser
+        //Save 
         JButton btnSave_1 = new JButton("Save");
         btnSave_1.setBackground(new Color(255, 255, 128));
         btnSave_1.addActionListener(new ActionListener() {
@@ -125,7 +128,7 @@ public class WindowFrame extends JFrame{
         btnSave_1.setBounds(494, 84, 113, 47);
         contentPane.add(btnSave_1);
         
-     // Bouton Distant saving
+        //Distant saving
         JButton btnDistantSaving = new JButton("Distant saving");
         btnDistantSaving.setBackground(new Color(255, 255, 128));
         btnDistantSaving.addActionListener(new ActionListener() {
@@ -139,6 +142,20 @@ public class WindowFrame extends JFrame{
         });
         btnDistantSaving.setBounds(364, 85, 120, 47);
         contentPane.add(btnDistantSaving);
+        
+        //Color
+        JButton btnColorChooser = new JButton("Color");
+        btnColorChooser.setBackground(new Color(255, 128, 128));
+        btnColorChooser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Color color = JColorChooser.showDialog(WindowFrame.this, "Choose Rectangle Color", Color.RED);
+                if (color != null) {
+                    panel.setCurrentColor(color);
+                }
+            }
+        });
+        btnColorChooser.setBounds(903, 85, 75, 47);
+        contentPane.add(btnColorChooser);
         
         //Fin Boutons
         
@@ -163,7 +180,7 @@ public class WindowFrame extends JFrame{
         
         //Load
         JButton btnLoad = new JButton("Load");
-        btnLoad.setBounds(820, 84, 113, 47);
+        btnLoad.setBounds(752, 85, 113, 47);
         contentPane.add(btnLoad);
         btnLoad.setBackground(new Color(255, 255, 128));
         btnLoad.addActionListener(new ActionListener() {
@@ -188,7 +205,8 @@ public class WindowFrame extends JFrame{
             if (enableDrawing && e.getX() >= 0 && e.getX() <= panel.getWidth() && e.getY() >= 0 && e.getY() <= panel.getHeight()) {
                 t.setX2(e.getX());
                 t.setY2(e.getY());
-                panel.addShape(new Rectangle(t.getX1(), t.getX2(), t.getY1(), t.getY2()));
+                Color currentColor = panel.getCurrentColor();
+                panel.addShape(new Rectangle(t.getX1(), t.getX2(), t.getY1(), t.getY2(), currentColor));
 	            enableDrawing = false; // reinitialise la variable à son etat d'origine (interdit le dessin de nouveaux rectangles sans recliquer sur le bouton 'Rectangle')
            }
            }      

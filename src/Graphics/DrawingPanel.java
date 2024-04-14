@@ -19,7 +19,8 @@ public class DrawingPanel extends JPanel {
     
     private Rectangle selectedShape = null;
     private ArrayList<Rectangle> shapes = new ArrayList<>();
-
+    private Color currentColor = Color.RED;
+    
     public DrawingPanel() {
         setBackground(Color.WHITE);
         addMouseListener(new MouseAdapter() {
@@ -57,6 +58,7 @@ public class DrawingPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         for (Rectangle shape : shapes) {
+        	g2d.setColor(shape.getColor());
             shape.paint(g2d);
         }
     }
@@ -75,6 +77,15 @@ public class DrawingPanel extends JPanel {
         repaint(); // Repaint to reflect the updated shapes
     }
     
+    public void setCurrentColor (Color color) {
+    	currentColor = color;
+    }
+    
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+    
+    
     public BufferedImage getPanelImage() {
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = image.createGraphics();
@@ -82,6 +93,7 @@ public class DrawingPanel extends JPanel {
         g2d.dispose();
         return image;
     }
+
     
     
 }

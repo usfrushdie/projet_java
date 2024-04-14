@@ -8,12 +8,14 @@ import java.io.Serializable;
 public class Rectangle implements Forme,Serializable{
 		
 	private int x1, x2, y1, y2;
+	private Color color;
 
-	public Rectangle(int x1, int x2, int y1, int y2) {
+	public Rectangle(int x1, int x2, int y1, int y2, Color color) {
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;
 		this.y2 = y2;
+		this.color = color;
 	}
 
 	public int getX1() {
@@ -48,6 +50,10 @@ public class Rectangle implements Forme,Serializable{
 		this.y2 = y2;
 	}
 	
+	public Color getColor() {
+		return color;
+	}
+	
 	public int getWidth() {
         return Math.abs(x2 - x1);
     }
@@ -80,7 +86,6 @@ public class Rectangle implements Forme,Serializable{
 	
 	public void paint(Graphics g) {
 	    Graphics2D g2 = (Graphics2D) g;
-	    g2.setColor(Color.RED);
 	    
 	    int width = getWidth();
 	    int height = getHeight();
@@ -96,17 +101,4 @@ public class Rectangle implements Forme,Serializable{
 	    }
 	}
 	
-	/*
-	public void paint(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.PINK);
-		if(x1<=x2)
-			g2.fillRect(x1, y1, Math.abs(x2-x1), Math.abs(y2-y1)); //(x1,y,2*r,2*r);
-		else
-			g2.fillRect(x2, y2, Math.abs(x2-x1), Math.abs(y2-y1));
-
-		g2.fillRect(x1, y1, x2-x1, y2-y1); //(x1,y,2*r,2*r);
-	}
-	*/
-
 }
