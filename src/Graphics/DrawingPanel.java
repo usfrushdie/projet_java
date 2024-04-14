@@ -74,7 +74,7 @@ public class DrawingPanel extends JPanel {
     
     public void setShapes(ArrayList<Rectangle> shapes) {
         this.shapes = shapes;
-        repaint(); // Repaint to reflect the updated shapes
+        repaint(); 
     }
     
     public void setCurrentColor (Color color) {

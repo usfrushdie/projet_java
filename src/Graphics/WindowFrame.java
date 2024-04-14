@@ -50,7 +50,7 @@ public class WindowFrame extends JFrame{
         contentPane.setLayout(null);
         
         // Plan de dessin
-        panel = new DrawingPanel(); // de type 'final' afin que les conditions dans 'mousePressed' et 'mouseReleased' fonctionnent
+        panel = new DrawingPanel(); 
         panel.setBackground(new Color(255, 255, 255));
         panel.setBounds(10, 142, 1074, 625);
         contentPane.add(panel);
@@ -148,7 +148,7 @@ public class WindowFrame extends JFrame{
         btnColorChooser.setBackground(new Color(255, 128, 128));
         btnColorChooser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Color color = JColorChooser.showDialog(WindowFrame.this, "Choose Rectangle Color", Color.RED);
+                Color color = JColorChooser.showDialog(WindowFrame.this, "Choose Rectangle Color", Color.RED); // la premiere forme sera rouge
                 if (color != null) {
                     panel.setCurrentColor(color);
                 }
