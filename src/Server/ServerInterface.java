@@ -7,5 +7,5 @@ import java.util.ArrayList;
 import Forms.Rectangle;
 
 public interface ServerInterface extends Remote {
-    void saveShapes(ArrayList<Rectangle> shapes) throws RemoteException;
+    public void saveShapes(ArrayList<Rectangle> shapes) throws RemoteException;
 }
