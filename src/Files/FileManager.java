@@ -32,11 +32,11 @@ public class FileManager {
 
     
 	public void setWindowFrame(WindowFrame windowFrame) {
-        this.windowFrame = windowFrame;
+        	this.windowFrame = windowFrame;
     }
 	
 	public void getWindowFrame(WindowFrame windowFrame) {
-        this.windowFrame = windowFrame;
+		return windowFrame;
     }
 	
 	public void setPanel(DrawingPanel panel) {
