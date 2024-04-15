@@ -35,7 +35,7 @@ public class FileManager {
         	this.windowFrame = windowFrame;
     }
 	
-	public void getWindowFrame(WindowFrame windowFrame) {
+	public WindowFrame getWindowFrame(WindowFrame windowFrame) {
 		return windowFrame;
     }
 	
