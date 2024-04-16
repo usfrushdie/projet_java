@@ -48,10 +48,11 @@ public class FileManager {
             Registry registry = LocateRegistry.getRegistry(ipAddress, 1099);
             server = (ServerInterface) registry.lookup("Server");
 
-            // Recuperer les formes depuis le panneau
+            //Pour recuperer les formes depuis le panneau
             ArrayList<Rectangle> shapes = panel.getShapes();
+            
 
-            // Appeler la methode distante pour sauvegarder les formes
+            //Ppour sauvegarder les formes
             server.saveShapes(shapes);
 
             System.out.println("Formes sauvegardées avec succès sur la machine distante.");

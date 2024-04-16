@@ -1,4 +1,4 @@
-package Server;
+/*package Server;
 
 import java.io.FileOutputStream;
 
@@ -34,4 +34,4 @@ public class ServerImplementation extends UnicastRemoteObject implements ServerI
             System.err.println("Erreur lors de la sauvegarde des formes : " + e.getMessage());
         }
     }
-}
+}*/

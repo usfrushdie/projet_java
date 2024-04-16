@@ -1,8 +1,8 @@
 package Server;
-
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
@@ -15,7 +15,18 @@ public class ServerMain extends UnicastRemoteObject implements ServerInterface {
 
     @Override
     public void saveShapes(ArrayList<Rectangle> shapes) throws RemoteException {
-        // Implémentation de la logique de sauvegarde des formes sur la machine distante
+        // Nom du fichier de sauvegarde
+        String fileName = "shapes.ser";
+
+        try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+
+            // Écriture des formes dans le fichier
+            out.writeObject(shapes);
+            System.out.println("Formes sauvegardees avec succes dans " + fileName);
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la sauvegarde des formes : " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
@@ -24,14 +35,14 @@ public class ServerMain extends UnicastRemoteObject implements ServerInterface {
             // Exporte l'objet distant
             ServerInterface stub = (ServerInterface) obj;
 
-            // Crée le registre RMI
-            LocateRegistry.createRegistry(1099);
+            // Cree le registre RMI
+            java.rmi.registry.LocateRegistry.createRegistry(1099);
 
             // Enregistre l'objet distant dans le registre
-            Registry registry = LocateRegistry.getRegistry();
+            java.rmi.registry.Registry registry = java.rmi.registry.LocateRegistry.getRegistry();
             registry.rebind("Server", stub);
 
-            System.out.println("Server ready");
+            System.out.println("Server rmi ready");
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
             e.printStackTrace();
