@@ -108,7 +108,8 @@ public class WindowFrame extends JFrame{
         
         //Export as png
         JButton btnSave = new JButton("Export as PNG");
-        btnSave.setBackground(new Color(255, 255, 128));
+        btnSave.setForeground(new Color(255, 255, 255));
+        btnSave.setBackground(new Color(0, 0, 128));
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	fileManager.exportAsPng(); 
@@ -119,7 +120,8 @@ public class WindowFrame extends JFrame{
         
         //Save 
         JButton btnSave_1 = new JButton("Save");
-        btnSave_1.setBackground(new Color(255, 255, 128));
+        btnSave_1.setForeground(new Color(255, 255, 255));
+        btnSave_1.setBackground(new Color(0, 0, 128));
         btnSave_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	fileManager.saveAsSerialized();
@@ -130,7 +132,8 @@ public class WindowFrame extends JFrame{
         
         //Distant saving
         JButton btnDistantSaving = new JButton("Distant saving");
-        btnDistantSaving.setBackground(new Color(255, 255, 128));
+        btnDistantSaving.setForeground(new Color(255, 255, 255));
+        btnDistantSaving.setBackground(new Color(0, 0, 128));
         btnDistantSaving.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String ipAddress = JOptionPane.showInputDialog(WindowFrame.this, "Entrez l'adresse IP de la machine distante:");
@@ -180,9 +183,10 @@ public class WindowFrame extends JFrame{
         
         //Load
         JButton btnLoad = new JButton("Load");
+        btnLoad.setForeground(new Color(255, 255, 255));
         btnLoad.setBounds(752, 85, 113, 47);
         contentPane.add(btnLoad);
-        btnLoad.setBackground(new Color(255, 255, 128));
+        btnLoad.setBackground(new Color(0, 0, 128));
         btnLoad.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	fileManager.loadFromSerializedFile(WindowFrame.this); // Appel de la methode pour charger le dessin

@@ -110,7 +110,7 @@ public class FileManager {
                 for (Rectangle shape : loadedShapes) {
                     panel.addShape(shape);
                 }
-                
+         
                 panel.repaint(); // Redessine le panel avec les formes chargees
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Erreur lors du chargement du fichier: " + ex.getMessage());
